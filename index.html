@@ -523,7 +523,7 @@
     .gallery-section {
       max-width: 1000px;
       margin: 0 auto 4rem;
-      padding: 0 1.2rem;
+      padding: 0;
     }
 
     .section-title {
@@ -532,6 +532,7 @@
       font-size: clamp(1.3rem, 3.5vw, 1.8rem);
       color: var(--gold-light);
       margin-bottom: 1.8rem;
+      padding: 0 1.2rem;
       opacity: 0;
       transform: translateY(20px);
       transition: all 0.9s ease;
@@ -542,30 +543,48 @@
       transform: translateY(0);
     }
 
+    /* Horizontal scroll gallery (mobile-first) */
     .gallery {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1.2rem;
+      display: flex;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      overflow-y: hidden;
+      gap: 1rem;
+      padding: 0.5rem 1.2rem 1.5rem;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(212, 160, 23, 0.5) transparent;
     }
 
-    @media (max-width: 640px) {
-      .gallery {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-      }
+    .gallery::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .gallery::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .gallery::-webkit-scrollbar-thumb {
+      background: rgba(212, 160, 23, 0.45);
+      border-radius: 3px;
     }
 
     .photo-card {
       position: relative;
+      flex: 0 0 min(85vw, 320px);
+      width: min(85vw, 320px);
       border-radius: 12px;
       overflow: hidden;
       aspect-ratio: 4/3;
       background: linear-gradient(145deg, var(--navy), var(--deep-green));
       border: 1px solid rgba(212, 160, 23, 0.25);
       box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+      scroll-snap-align: center;
       opacity: 0;
       transform: translateY(30px) scale(0.95);
-      transition: all 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+      transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     .photo-img {
@@ -585,61 +604,25 @@
       transform: translateY(0) scale(1);
     }
 
-    .photo-card:nth-child(1) { transition-delay: 0.1s; }
-    .photo-card:nth-child(2) { transition-delay: 0.25s; }
-    .photo-card:nth-child(3) { transition-delay: 0.4s; }
-    .photo-card:nth-child(4) { transition-delay: 0.55s; }
+    .photo-card:nth-child(1) { transition-delay: 0.05s; }
+    .photo-card:nth-child(2) { transition-delay: 0.1s; }
+    .photo-card:nth-child(3) { transition-delay: 0.15s; }
+    .photo-card:nth-child(4) { transition-delay: 0.2s; }
+    .photo-card:nth-child(5) { transition-delay: 0.25s; }
+    .photo-card:nth-child(6) { transition-delay: 0.3s; }
+    .photo-card:nth-child(7) { transition-delay: 0.35s; }
 
-    .photo-placeholder {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 1.5rem;
-      text-align: center;
-      background: 
-        radial-gradient(circle at 30% 20%, rgba(212, 160, 23, 0.08), transparent 50%),
-        linear-gradient(160deg, rgba(13,59,46,0.9), rgba(10,31,61,0.95));
-      position: relative;
-    }
+    /* Desktop: slightly wider cards, still horizontal scroll */
+    @media (min-width: 768px) {
+      .gallery {
+        gap: 1.2rem;
+        padding: 0.5rem 1.5rem 1.5rem;
+      }
 
-    .photo-placeholder::before {
-      content: '';
-      position: absolute;
-      inset: 8px;
-      border: 1px solid rgba(212, 160, 23, 0.2);
-      border-radius: 8px;
-      pointer-events: none;
-    }
-
-    .photo-icon {
-      width: 48px;
-      height: 48px;
-      margin-bottom: 1rem;
-      opacity: 0.6;
-      color: var(--gold);
-    }
-
-    .photo-desc {
-      font-size: 0.9rem;
-      color: var(--cream);
-      line-height: 1.5;
-      max-width: 280px;
-    }
-
-    .photo-label {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      padding: 0.6rem 1rem;
-      background: linear-gradient(transparent, rgba(0,0,0,0.7));
-      font-size: 0.75rem;
-      color: var(--gold-light);
-      letter-spacing: 0.05em;
-      text-align: center;
+      .photo-card {
+        flex: 0 0 340px;
+        width: 340px;
+      }
     }
 
     /* Footer */
@@ -782,31 +765,31 @@
         </svg>
       </div>
 
-      <h1 id="mainTitle">Ытыктабыллаах ыалдьыппыт!</h1>
-      <div class="subtitle" id="mainSub">Сунтаар улууһун Бордоҥ орто оскуолата • 95 сыл</div>
+      <h1 id="mainTitle">Ыҥырыы сурук</h1>
+      <div class="subtitle" id="mainSub">Сунтаар улууһун Бордоҥ орто оскуолата • 95 сыла</div>
     </header>
 
     <div class="invitation-card" id="inviteCard">
       <div class="invite-text">
         <p class="greeting">Ытыктабыллаах ыалдьыппыт!</p>
         
-        <p>Эйигин Сунтаар улууһун Бордоҥ орто оскуолатын 95 сыллаах үбүлүөйгэр анаммыт үөрүүлээх тэрээһиҥҥэ мааны ыалдьыт быһыытынан ис сүрэхпититтэн ыҥырабыт!</p>
+        <p>Эйигин Сунтаар улууҺун Бордоҥ орто оскуолатын 95 сыллаах үбүлүөйүгэр ис сүрэхпититтэн мааны ыалдьыт буоларгар ыҥырабыт!</p>
         
-        <p>Оскуолабыт үүнэн-сайдан кэлбит кэрдииc кэмнэрин санатыһа, уонна инники сайдар кэскилин түстэһэр туһугар биһигини кытта бииргэ буолуоҥ диэн эрэнэбит.</p>
+        <p>Оскуолабыт үүнэн-сайдан кэлбит кэрдиис кэмнэрин санатыҺа, инники сайдар кэскилин түстэҺэр туҺааннаах түгэҥҥэ биҺигинниин бииргэ буолуоҥ диэн эрэнэбит.</p>
 
         <div class="highlight-box">
           <div class="date-main">2026 сыл, алтынньы 02 күнэ</div>
           <div class="schedule">
             <div class="schedule-item">
-              <span class="time">сарсыарда 9 чаас</span>
+              <span class="time">сарсыарда 9ч</span>
               <span class="event">Орто оскуолаҕа тэрээһиннэр</span>
             </div>
             <div class="schedule-item">
-              <span class="time">күнүс 3 чаас</span>
+              <span class="time">күнүс 3ч</span>
               <span class="event">Тэрээһин үөрүүлээх чааһа “Айыллаан” КК</span>
             </div>
             <div class="schedule-item">
-              <span class="time">киэһэ 6 чаас</span>
+              <span class="time">киэһэ 6ч</span>
               <span class="event">Бырааһынньыктааҕы сандалы орто оскуолаҕа</span>
             </div>
           </div>
@@ -823,61 +806,41 @@
             </svg>
             <span>Мин кэлиэм!</span>
           </a>
-          <p class="rsvp-hint">Батыалаатаххына WhatsApp-ка сурук ыытыллыа</p>
+          <p class="rsvp-hint">Баттаатаххына WhatsApp-ка сурук ыытыллыа</p>
         </div>
       </div>
     </div>
 
-     <!-- Gallery -->
+    <!-- Gallery — horizontal scroll -->
     <section class="gallery-section">
-        <h2 class="section-title" id="galleryTitle">
-          Оскуола олоҕуттан түгэннэр
-        </h2>
+      <h2 class="section-title" id="galleryTitle">
+        Оскуола олоҕуттан түгэннэр
+      </h2>
 
-        <div class="gallery">
-          <div class="photo-card" data-reveal>
-            <img
-              src="1.jpeg"
-              alt="Торжественное выступление"
-              class="photo-img"
-            />
-            <div class="photo-label">Торжественное выступление</div>
-          </div>
-
-          <div class="photo-card" data-reveal>
-            <div class="photo-card" data-reveal>
-              <img
-                src="2.jpeg"
-                alt="Дети в школьной форме сидят за столом в библиотеке и читают книги"
-                class="photo-img"
-              />
-              <div class="photo-label">Дети в библиотеке</div>
-            </div>
-          </div>
-
-          <div class="photo-card" data-reveal>
-            <div class="photo-card" data-reveal>
-              <img
-                src="3.jpeg"
-                alt="Большая групповая фотография детей в камуфляжной форме и беретах в спортивном зале на фоне флага России и надписи «23 февраля»"
-                class="photo-img"
-              />
-              <div class="photo-label">23 февраля</div>
-            </div>
-          </div>
-
-          <div class="photo-card" data-reveal>
-            <div class="photo-card" data-reveal>
-              <img
-                src="4.jpeg"
-                alt="Группа детей-спортсменов с медалями и зелёным флагом на пьедестале почёта в спортивном зале"
-                class="photo-img"
-              />
-              <div class="photo-label">Спортивные победы</div>
-            </div>
-          </div>
+      <div class="gallery">
+        <div class="photo-card" data-reveal>
+          <img src="1.jpeg" class="photo-img" alt="" />
         </div>
-      </section>
+        <div class="photo-card" data-reveal>
+          <img src="2.jpeg" class="photo-img" alt="" />
+        </div>
+        <div class="photo-card" data-reveal>
+          <img src="3.jpeg" class="photo-img" alt="" />
+        </div>
+        <div class="photo-card" data-reveal>
+          <img src="4.jpeg" class="photo-img" alt="" />
+        </div>
+        <div class="photo-card" data-reveal>
+          <img src="5.jpeg" class="photo-img" alt="" />
+        </div>
+        <div class="photo-card" data-reveal>
+          <img src="6.jpeg" class="photo-img" alt="" />
+        </div>
+        <div class="photo-card" data-reveal>
+          <img src="7.jpeg" class="photo-img" alt="" />
+        </div>
+      </div>
+    </section>
 
     <footer>
       <div class="footer-ornament">
